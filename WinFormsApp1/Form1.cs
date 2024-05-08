@@ -1,10 +1,4 @@
-using System;
-using System.IO;
-using System.Runtime.ConstrainedExecution;
 using System.Text.RegularExpressions;
-using static System.Windows.Forms.LinkLabel;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-
 namespace WinFormsApp1;
 
 public partial class Form1 : Form
