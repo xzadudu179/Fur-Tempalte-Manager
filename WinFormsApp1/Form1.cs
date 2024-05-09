@@ -217,7 +217,7 @@ public partial class Form1 : Form
     {
         InputAllButton.Enabled = false;
         InputButton.Enabled = false;
-        if (templateAuthorTextBox.Text == "") return;
+        //if (templateAuthorTextBox.Text == "") return;
         if (templateNameTextBox.Text == "") return;
         if (templateCostTextBox.Text == "") return;
         if (templateUsageComboBox.SelectedIndex < 0) return;
@@ -359,9 +359,9 @@ public partial class Form1 : Form
         foreach (string directory in directories)
         {
             // 判断该QQ的文件夹是否存在
-            if (Path.GetFileName(directory).Split("-")[0] != templateSellerId.Text) continue;            
-            if (Path.GetFileName(directory).Split("-")[1] == templateSellerName.Text || templateSellerName.Text == "") continue;
-            DialogResult sellerNameResult = MessageBox.Show($"当前对于QQ\"{templateSellerId.Text}\"的备注名不一致, 原备注名为\"{Path.GetFileName(directory).Split("-")[1].Substring(2)}\", 当前填写备注名为\"{templateSellerName.Text}\", 是否重命名为\"{path}\"？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (Path.GetFileName(directory).Split("-")[0] != templateSellerId.Text) continue;
+            if (Path.GetFileName(directory).Split("-")[1][2..] == templateSellerName.Text || templateSellerName.Text == "") continue;
+            DialogResult sellerNameResult = MessageBox.Show($"当前对于QQ\"{templateSellerId.Text}\"的备注名不一致, 原备注名为\"{Path.GetFileName(directory).Split("-")[1][2..]}\", 当前填写备注名为\"{templateSellerName.Text}\", 是否重命名为\"{path}\"？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (sellerNameResult == DialogResult.Yes)
             {
                 try
@@ -417,7 +417,14 @@ public partial class Form1 : Form
         int templateCount = templates.Length;
         // 模板名
         string templateAuthor = templateAuthorTextBox.Text.Replace(" ", "");
-        templateAuthor = templateAuthor[templateAuthor.Length - 1] == '牌' ? templateAuthor : templateAuthor + "牌";
+        if (templateAuthor != "")
+        {
+            templateAuthor += "牌";
+        }
+        else
+        {
+            templateAuthor = "不知道什么牌";
+        }
         string templateName = templateAuthor + " " + templateNameTextBox.Text.Replace(" ", "");
         // 模板文件夹名称
         string templateFolderName = $"{templateGroupCountTextBox.Text}q_{double.Parse(templateCostTextBox.Text):G}r_{usage}_{deliWays}_{templateName}_收入0_数{templateCount}";
