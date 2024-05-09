@@ -86,7 +86,7 @@ partial class Form1
         // 
         // templateNameTextBox
         // 
-        templateNameTextBox.Location = new Point(517, 49);
+        templateNameTextBox.Location = new Point(526, 49);
         templateNameTextBox.Name = "templateNameTextBox";
         templateNameTextBox.Size = new Size(100, 23);
         templateNameTextBox.TabIndex = 1;
@@ -95,7 +95,7 @@ partial class Form1
         // label1
         // 
         label1.AutoSize = true;
-        label1.Location = new Point(491, 52);
+        label1.Location = new Point(500, 52);
         label1.Name = "label1";
         label1.Size = new Size(23, 17);
         label1.TabIndex = 2;
@@ -103,7 +103,7 @@ partial class Form1
         // 
         // templateAuthorTextBox
         // 
-        templateAuthorTextBox.Location = new Point(367, 49);
+        templateAuthorTextBox.Location = new Point(376, 49);
         templateAuthorTextBox.Name = "templateAuthorTextBox";
         templateAuthorTextBox.Size = new Size(118, 23);
         templateAuthorTextBox.TabIndex = 3;
@@ -114,9 +114,9 @@ partial class Form1
         templateNameLabel.AutoSize = true;
         templateNameLabel.Location = new Point(282, 52);
         templateNameLabel.Name = "templateNameLabel";
-        templateNameLabel.Size = new Size(59, 17);
+        templateNameLabel.Size = new Size(88, 17);
         templateNameLabel.TabIndex = 4;
-        templateNameLabel.Text = "模板牌名:";
+        templateNameLabel.Text = "模板牌名(可选)";
         // 
         // label2
         // 
@@ -151,7 +151,7 @@ partial class Form1
         // 
         // templateCostTextBox
         // 
-        templateCostTextBox.Location = new Point(367, 77);
+        templateCostTextBox.Location = new Point(376, 77);
         templateCostTextBox.Name = "templateCostTextBox";
         templateCostTextBox.Size = new Size(118, 23);
         templateCostTextBox.TabIndex = 8;
@@ -160,7 +160,7 @@ partial class Form1
         // label4
         // 
         label4.AutoSize = true;
-        label4.Location = new Point(491, 80);
+        label4.Location = new Point(500, 80);
         label4.Name = "label4";
         label4.Size = new Size(13, 17);
         label4.TabIndex = 9;
@@ -180,7 +180,7 @@ partial class Form1
         templateUsageComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         templateUsageComboBox.FormattingEnabled = true;
         templateUsageComboBox.Items.AddRange(new object[] { "商用", "使用", "商使合一" });
-        templateUsageComboBox.Location = new Point(367, 106);
+        templateUsageComboBox.Location = new Point(376, 106);
         templateUsageComboBox.Name = "templateUsageComboBox";
         templateUsageComboBox.Size = new Size(118, 25);
         templateUsageComboBox.TabIndex = 13;
@@ -197,7 +197,7 @@ partial class Form1
         // 
         // templateSellerId
         // 
-        templateSellerId.Location = new Point(367, 137);
+        templateSellerId.Location = new Point(376, 137);
         templateSellerId.Name = "templateSellerId";
         templateSellerId.Size = new Size(118, 23);
         templateSellerId.TabIndex = 15;
@@ -206,7 +206,7 @@ partial class Form1
         // label7
         // 
         label7.AutoSize = true;
-        label7.Location = new Point(491, 140);
+        label7.Location = new Point(500, 140);
         label7.Name = "label7";
         label7.Size = new Size(64, 17);
         label7.TabIndex = 16;
@@ -214,7 +214,7 @@ partial class Form1
         // 
         // templateSellerName
         // 
-        templateSellerName.Location = new Point(561, 137);
+        templateSellerName.Location = new Point(570, 137);
         templateSellerName.Name = "templateSellerName";
         templateSellerName.Size = new Size(100, 23);
         templateSellerName.TabIndex = 17;
@@ -242,7 +242,7 @@ partial class Form1
         // 
         // templateGroupCountTextBox
         // 
-        templateGroupCountTextBox.Location = new Point(367, 166);
+        templateGroupCountTextBox.Location = new Point(376, 166);
         templateGroupCountTextBox.Name = "templateGroupCountTextBox";
         templateGroupCountTextBox.Size = new Size(117, 23);
         templateGroupCountTextBox.TabIndex = 20;
@@ -263,7 +263,7 @@ partial class Form1
         templateDeliveryWaysComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         templateDeliveryWaysComboBox.FormattingEnabled = true;
         templateDeliveryWaysComboBox.Items.AddRange(new object[] { "群发", "云发", "私发" });
-        templateDeliveryWaysComboBox.Location = new Point(367, 195);
+        templateDeliveryWaysComboBox.Location = new Point(376, 195);
         templateDeliveryWaysComboBox.Name = "templateDeliveryWaysComboBox";
         templateDeliveryWaysComboBox.Size = new Size(117, 25);
         templateDeliveryWaysComboBox.TabIndex = 22;
@@ -361,7 +361,7 @@ partial class Form1
         // templatePathInfo
         // 
         templatePathInfo.Name = "templatePathInfo";
-        templatePathInfo.Size = new Size(180, 22);
+        templatePathInfo.Size = new Size(160, 22);
         templatePathInfo.Text = "模板文件夹路径";
         templatePathInfo.Click += templatePathInfo_Click;
         // 
