@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text.RegularExpressions;
 namespace WinFormsApp1;
 
@@ -10,6 +11,7 @@ public partial class Form1 : Form
     string folderLabelLastStat = "...";
     List<string> templatesFilePaths = [];
     string templatesFolderPath = "";
+    Dictionary<string, string> SellerIdName = [];
     readonly string configpath = "config.txt";
     // 配置文件 ↓
     #region config
@@ -31,6 +33,22 @@ public partial class Form1 : Form
         if (templatePath == "")
         {
             MessageBox.Show("你没有设置模板统计文件夹, 默认将在程序所在文件夹里创建。", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        // 加载买商老师QQ
+        LoadSellerId();
+    }
+
+    private void LoadSellerId()
+    {
+        foreach (string file in Directory.GetDirectories(templatePath))
+        {
+            try
+            {
+                SellerIdName.Add(Path.GetFileName(file).Split("-")[0], Path.GetFileName(file).Split("-")[1][2..]);
+            }
+            catch { }
+            string name = Path.GetFileName(file).Split("-")[1];
+            templateSellerIdComboBox.Items.Add(Path.GetFileName(file).Split("-")[0] + (name != "" ? $" ({name})" : ""));
         }
     }
 
@@ -223,7 +241,7 @@ public partial class Form1 : Form
         if (templateNameTextBox.Text == "") return;
         if (templateCostTextBox.Text == "") return;
         if (templateUsageComboBox.SelectedIndex < 0) return;
-        if (templateSellerId.Text == "") return;
+        if (templateSellerIdComboBox.Text == "") return;
         //if (templateSellerName.Text.Contains('_')) return;
         if (templateGroupCountTextBox.Text == "") return;
         if (templateDeliveryWaysComboBox.SelectedIndex < 0) return;
@@ -284,9 +302,9 @@ public partial class Form1 : Form
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void templateSellerId_Leave(object sender, EventArgs e)
+    private void templateSellerIdComboBox_Leave(object sender, EventArgs e)
     {
-        templateSellerId.Text = ParseToNumberFormat(templateSellerId.Text);
+        templateSellerIdComboBox.Text = ParseToNumberFormat(templateSellerIdComboBox.Text);
         RefreshInputButtonState();
     }
 
@@ -357,14 +375,14 @@ public partial class Form1 : Form
         if (templates.Length <= 0) return false;
         int cratedFileCount = 0;
         //MessageBox.Show(templatePath);
-        string path = $"{templatePath}\\{templateSellerId.Text}-{(templateSellerName.Text != "" ? "备注" + templateSellerName.Text : "")}";
+        string path = $"{templatePath}\\{templateSellerIdComboBox.Text}-{(templateSellerName.Text != "" ? "备注" + templateSellerName.Text : "")}";
         string[] directories = Directory.GetDirectories(templatePath);
         foreach (string directory in directories)
         {
             // 判断该QQ的文件夹是否存在
-            if (Path.GetFileName(directory).Split("-")[0] != templateSellerId.Text) continue;
+            if (Path.GetFileName(directory).Split("-")[0] != templateSellerIdComboBox.Text) continue;
             path = directory;
-            MessageBox.Show($"存在QQ为{templateSellerId.Text}的文件夹{Path.GetFileName(directory).Split("-")[0]}");
+            //MessageBox.Show($"存在QQ为{templateSellerIdComboBox.Text}的文件夹{Path.GetFileName(directory).Split("-")[0]}");
             try
             {
                 // 如果备注名一致或没填写备注名则继续
@@ -375,7 +393,7 @@ public partial class Form1 : Form
                 // 本身就没有备注名
                 continue;
             }
-            DialogResult sellerNameResult = MessageBox.Show($"当前对于QQ\"{templateSellerId.Text}\"的备注名不一致, 原备注名为\"{Path.GetFileName(directory).Split("-")[1][2..]}\", 当前填写备注名为\"{templateSellerName.Text}\", 是否重命名为\"{path}\"？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult sellerNameResult = MessageBox.Show($"当前对于QQ\"{templateSellerIdComboBox.Text}\"的备注名不一致, 原备注名为\"{Path.GetFileName(directory).Split("-")[1][2..]}\", 当前填写备注名为\"{templateSellerName.Text}\", 是否重命名为\"{path}\"？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (sellerNameResult == DialogResult.Yes)
             {
                 try
@@ -433,7 +451,16 @@ public partial class Form1 : Form
         string templateAuthor = templateAuthorTextBox.Text.Trim().Replace(" ", "-");
         if (templateAuthor != "")
         {
-            templateAuthor += "牌";
+            // 在最后一个字符是牌的情况下
+            if (templateAuthor[^1] == '牌')
+            {
+                // 如果倒数第二个字符是牌则不加牌, 否则加牌
+                if (templateAuthor.Length == 1)
+                {
+                    templateAuthor += '牌';
+                }               
+            }
+            
         }
         else
         {
@@ -637,5 +664,12 @@ public partial class Form1 : Form
         MessageBox.Show($"    拖拽或选择存放模板工程文件的文件夹到左侧的工具栏，之后在右侧填写模板信息。在列表栏选择需要的工程文件（可多选）后按下\"导入所选\"进行导入，或是使用\"全部导入\"导入列表中的所有工程文件。\n\n" +
                          "    第一次打开该程序时会要求选择模板存放的文件夹，之后可在\"设置\"栏里进行更改，或在\"信息\"栏里查看。\n\n" +
                          "    注意: 模板名以'+'分割多个模板名，多个模板名会被记录在模板数量里", "帮助", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    } 
+    }
+
+    private void templateSellerIdComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        string boxTextString = templateSellerIdComboBox.Text.Split('(')[0];
+        templateSellerIdComboBox.Text = boxTextString[..(boxTextString.Length - 1)];
+        templateSellerName.Text = SellerIdName[templateSellerIdComboBox.Text];
+    }
 }

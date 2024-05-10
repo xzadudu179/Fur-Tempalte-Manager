@@ -43,7 +43,6 @@ partial class Form1
         label5 = new Label();
         templateUsageComboBox = new ComboBox();
         label6 = new Label();
-        templateSellerId = new TextBox();
         label7 = new Label();
         templateSellerName = new TextBox();
         InputAllButton = new Button();
@@ -67,6 +66,7 @@ partial class Form1
         importStatusStrip = new ToolStripStatusLabel();
         refreshFolderContentButton = new Button();
         timer1 = new System.Windows.Forms.Timer(components);
+        templateSellerIdComboBox = new ComboBox();
         menuStrip1.SuspendLayout();
         statusStrip1.SuspendLayout();
         SuspendLayout();
@@ -89,7 +89,7 @@ partial class Form1
         // 
         // templateNameTextBox
         // 
-        templateNameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        templateNameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         templateNameTextBox.Location = new Point(594, 49);
         templateNameTextBox.Name = "templateNameTextBox";
         templateNameTextBox.Size = new Size(100, 23);
@@ -98,6 +98,7 @@ partial class Form1
         // 
         // label1
         // 
+        label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         label1.AutoSize = true;
         label1.Location = new Point(500, 52);
         label1.Name = "label1";
@@ -107,6 +108,7 @@ partial class Form1
         // 
         // templateAuthorTextBox
         // 
+        templateAuthorTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         templateAuthorTextBox.Location = new Point(376, 49);
         templateAuthorTextBox.Name = "templateAuthorTextBox";
         templateAuthorTextBox.Size = new Size(118, 23);
@@ -135,7 +137,7 @@ partial class Form1
         // 
         InputButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
         InputButton.Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
-        InputButton.Location = new Point(12, 396);
+        InputButton.Location = new Point(12, 405);
         InputButton.Name = "InputButton";
         InputButton.RightToLeft = RightToLeft.No;
         InputButton.Size = new Size(130, 45);
@@ -155,6 +157,7 @@ partial class Form1
         // 
         // templateCostTextBox
         // 
+        templateCostTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         templateCostTextBox.Location = new Point(376, 77);
         templateCostTextBox.Name = "templateCostTextBox";
         templateCostTextBox.Size = new Size(118, 23);
@@ -163,6 +166,7 @@ partial class Form1
         // 
         // label4
         // 
+        label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         label4.AutoSize = true;
         label4.Location = new Point(500, 80);
         label4.Name = "label4";
@@ -181,6 +185,7 @@ partial class Form1
         // 
         // templateUsageComboBox
         // 
+        templateUsageComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         templateUsageComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         templateUsageComboBox.FormattingEnabled = true;
         templateUsageComboBox.Items.AddRange(new object[] { "商用", "使用", "商使合一" });
@@ -199,16 +204,9 @@ partial class Form1
         label6.TabIndex = 14;
         label6.Text = "买商老师qq";
         // 
-        // templateSellerId
-        // 
-        templateSellerId.Location = new Point(376, 137);
-        templateSellerId.Name = "templateSellerId";
-        templateSellerId.Size = new Size(118, 23);
-        templateSellerId.TabIndex = 15;
-        templateSellerId.Leave += templateSellerId_Leave;
-        // 
         // label7
         // 
+        label7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         label7.AutoSize = true;
         label7.Location = new Point(500, 140);
         label7.Name = "label7";
@@ -218,7 +216,7 @@ partial class Form1
         // 
         // templateSellerName
         // 
-        templateSellerName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        templateSellerName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         templateSellerName.Location = new Point(594, 137);
         templateSellerName.Name = "templateSellerName";
         templateSellerName.Size = new Size(100, 23);
@@ -228,7 +226,7 @@ partial class Form1
         // InputAllButton
         // 
         InputAllButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-        InputAllButton.Location = new Point(148, 396);
+        InputAllButton.Location = new Point(148, 405);
         InputAllButton.Name = "InputAllButton";
         InputAllButton.Size = new Size(130, 45);
         InputAllButton.TabIndex = 18;
@@ -239,7 +237,7 @@ partial class Form1
         // label8
         // 
         label8.AutoSize = true;
-        label8.Location = new Point(282, 169);
+        label8.Location = new Point(283, 171);
         label8.Name = "label8";
         label8.Size = new Size(80, 17);
         label8.TabIndex = 19;
@@ -247,7 +245,8 @@ partial class Form1
         // 
         // templateGroupCountTextBox
         // 
-        templateGroupCountTextBox.Location = new Point(376, 166);
+        templateGroupCountTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        templateGroupCountTextBox.Location = new Point(377, 168);
         templateGroupCountTextBox.Name = "templateGroupCountTextBox";
         templateGroupCountTextBox.Size = new Size(117, 23);
         templateGroupCountTextBox.TabIndex = 20;
@@ -256,7 +255,7 @@ partial class Form1
         // label9
         // 
         label9.AutoSize = true;
-        label9.Location = new Point(282, 198);
+        label9.Location = new Point(283, 200);
         label9.Name = "label9";
         label9.Size = new Size(80, 17);
         label9.TabIndex = 21;
@@ -264,11 +263,12 @@ partial class Form1
         // 
         // templateDeliveryWaysComboBox
         // 
+        templateDeliveryWaysComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         templateDeliveryWaysComboBox.DisplayMember = "商用";
         templateDeliveryWaysComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         templateDeliveryWaysComboBox.FormattingEnabled = true;
         templateDeliveryWaysComboBox.Items.AddRange(new object[] { "群发", "云发", "私发" });
-        templateDeliveryWaysComboBox.Location = new Point(376, 195);
+        templateDeliveryWaysComboBox.Location = new Point(377, 197);
         templateDeliveryWaysComboBox.Name = "templateDeliveryWaysComboBox";
         templateDeliveryWaysComboBox.Size = new Size(117, 25);
         templateDeliveryWaysComboBox.TabIndex = 22;
@@ -292,7 +292,7 @@ partial class Form1
         templateAgreementTextBox.Multiline = true;
         templateAgreementTextBox.Name = "templateAgreementTextBox";
         templateAgreementTextBox.ScrollBars = ScrollBars.Vertical;
-        templateAgreementTextBox.Size = new Size(422, 182);
+        templateAgreementTextBox.Size = new Size(422, 191);
         templateAgreementTextBox.TabIndex = 24;
         templateAgreementTextBox.TextChanged += templateAgreementTextBox_TextChanged;
         // 
@@ -380,7 +380,7 @@ partial class Form1
         // statusStrip1
         // 
         statusStrip1.Items.AddRange(new ToolStripItem[] { importStatusStrip });
-        statusStrip1.Location = new Point(0, 456);
+        statusStrip1.Location = new Point(0, 465);
         statusStrip1.Name = "statusStrip1";
         statusStrip1.Size = new Size(716, 22);
         statusStrip1.TabIndex = 30;
@@ -402,11 +402,23 @@ partial class Form1
         refreshFolderContentButton.UseVisualStyleBackColor = true;
         refreshFolderContentButton.Click += refreshFolderContentButton_Click;
         // 
+        // templateSellerIdComboBox
+        // 
+        templateSellerIdComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        templateSellerIdComboBox.FormattingEnabled = true;
+        templateSellerIdComboBox.Location = new Point(376, 137);
+        templateSellerIdComboBox.Name = "templateSellerIdComboBox";
+        templateSellerIdComboBox.Size = new Size(118, 25);
+        templateSellerIdComboBox.TabIndex = 32;
+        templateSellerIdComboBox.SelectedIndexChanged += templateSellerIdComboBox_SelectedIndexChanged;
+        templateSellerIdComboBox.Leave += templateSellerIdComboBox_Leave;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 17F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(716, 478);
+        ClientSize = new Size(716, 487);
+        Controls.Add(templateSellerIdComboBox);
         Controls.Add(refreshFolderContentButton);
         Controls.Add(statusStrip1);
         Controls.Add(clearButton);
@@ -422,7 +434,6 @@ partial class Form1
         Controls.Add(InputAllButton);
         Controls.Add(templateSellerName);
         Controls.Add(label7);
-        Controls.Add(templateSellerId);
         Controls.Add(label6);
         Controls.Add(templateUsageComboBox);
         Controls.Add(label5);
@@ -490,4 +501,5 @@ partial class Form1
     private ToolStripMenuItem helpMenuStrip;
     private Button refreshFolderContentButton;
     private System.Windows.Forms.Timer timer1;
+    private ComboBox templateSellerIdComboBox;
 }
