@@ -28,6 +28,7 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
         templateBox = new ListBox();
         templateNameTextBox = new TextBox();
@@ -64,6 +65,8 @@ partial class Form1
         helpMenuStrip = new ToolStripMenuItem();
         statusStrip1 = new StatusStrip();
         importStatusStrip = new ToolStripStatusLabel();
+        refreshFolderContentButton = new Button();
+        timer1 = new System.Windows.Forms.Timer(components);
         menuStrip1.SuspendLayout();
         statusStrip1.SuspendLayout();
         SuspendLayout();
@@ -74,10 +77,10 @@ partial class Form1
         templateBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
         templateBox.FormattingEnabled = true;
         templateBox.ItemHeight = 17;
-        templateBox.Location = new Point(12, 114);
+        templateBox.Location = new Point(12, 129);
         templateBox.Name = "templateBox";
         templateBox.SelectionMode = SelectionMode.MultiExtended;
-        templateBox.Size = new Size(264, 276);
+        templateBox.Size = new Size(264, 259);
         templateBox.TabIndex = 0;
         templateBox.SelectedIndexChanged += templateBox_SelectedIndexChanged;
         templateBox.DragDrop += templateBox_DragDrop;
@@ -86,7 +89,8 @@ partial class Form1
         // 
         // templateNameTextBox
         // 
-        templateNameTextBox.Location = new Point(526, 49);
+        templateNameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        templateNameTextBox.Location = new Point(594, 49);
         templateNameTextBox.Name = "templateNameTextBox";
         templateNameTextBox.Size = new Size(100, 23);
         templateNameTextBox.TabIndex = 1;
@@ -97,9 +101,9 @@ partial class Form1
         label1.AutoSize = true;
         label1.Location = new Point(500, 52);
         label1.Name = "label1";
-        label1.Size = new Size(23, 17);
+        label1.Size = new Size(88, 17);
         label1.TabIndex = 2;
-        label1.Text = "名:";
+        label1.Text = "名(用+号分隔):";
         // 
         // templateAuthorTextBox
         // 
@@ -208,13 +212,14 @@ partial class Form1
         label7.AutoSize = true;
         label7.Location = new Point(500, 140);
         label7.Name = "label7";
-        label7.Size = new Size(64, 17);
+        label7.Size = new Size(67, 17);
         label7.TabIndex = 16;
-        label7.Text = "备注(可选)";
+        label7.Text = "备注(可选):";
         // 
         // templateSellerName
         // 
-        templateSellerName.Location = new Point(570, 137);
+        templateSellerName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        templateSellerName.Location = new Point(594, 137);
         templateSellerName.Name = "templateSellerName";
         templateSellerName.Size = new Size(100, 23);
         templateSellerName.TabIndex = 17;
@@ -287,15 +292,15 @@ partial class Form1
         templateAgreementTextBox.Multiline = true;
         templateAgreementTextBox.Name = "templateAgreementTextBox";
         templateAgreementTextBox.ScrollBars = ScrollBars.Vertical;
-        templateAgreementTextBox.Size = new Size(385, 182);
+        templateAgreementTextBox.Size = new Size(422, 182);
         templateAgreementTextBox.TabIndex = 24;
         templateAgreementTextBox.TextChanged += templateAgreementTextBox_TextChanged;
         // 
         // chooseFolderButton
         // 
-        chooseFolderButton.Location = new Point(12, 52);
+        chooseFolderButton.Location = new Point(12, 56);
         chooseFolderButton.Name = "chooseFolderButton";
-        chooseFolderButton.Size = new Size(96, 28);
+        chooseFolderButton.Size = new Size(130, 39);
         chooseFolderButton.TabIndex = 25;
         chooseFolderButton.Text = "选择文件夹";
         chooseFolderButton.UseVisualStyleBackColor = true;
@@ -303,9 +308,9 @@ partial class Form1
         // 
         // folderLabel
         // 
-        folderLabel.Location = new Point(114, 58);
+        folderLabel.Location = new Point(148, 56);
         folderLabel.Name = "folderLabel";
-        folderLabel.Size = new Size(162, 50);
+        folderLabel.Size = new Size(128, 67);
         folderLabel.TabIndex = 26;
         folderLabel.Text = "...";
         // 
@@ -315,14 +320,14 @@ partial class Form1
         label11.BackColor = SystemColors.ControlDark;
         label11.Location = new Point(282, 228);
         label11.Name = "label11";
-        label11.Size = new Size(385, 1);
+        label11.Size = new Size(422, 1);
         label11.TabIndex = 27;
         // 
         // clearButton
         // 
-        clearButton.Location = new Point(12, 80);
+        clearButton.Location = new Point(75, 98);
         clearButton.Name = "clearButton";
-        clearButton.Size = new Size(96, 28);
+        clearButton.Size = new Size(67, 25);
         clearButton.TabIndex = 28;
         clearButton.Text = "清空";
         clearButton.UseVisualStyleBackColor = true;
@@ -333,7 +338,7 @@ partial class Form1
         menuStrip1.Items.AddRange(new ToolStripItem[] { settingsItem, infoStrip, helpMenuStrip });
         menuStrip1.Location = new Point(0, 0);
         menuStrip1.Name = "menuStrip1";
-        menuStrip1.Size = new Size(679, 25);
+        menuStrip1.Size = new Size(716, 25);
         menuStrip1.TabIndex = 29;
         menuStrip1.Text = "menuStrip1";
         // 
@@ -377,7 +382,7 @@ partial class Form1
         statusStrip1.Items.AddRange(new ToolStripItem[] { importStatusStrip });
         statusStrip1.Location = new Point(0, 456);
         statusStrip1.Name = "statusStrip1";
-        statusStrip1.Size = new Size(679, 22);
+        statusStrip1.Size = new Size(716, 22);
         statusStrip1.TabIndex = 30;
         statusStrip1.Text = "statusStrip1";
         // 
@@ -387,11 +392,22 @@ partial class Form1
         importStatusStrip.Size = new Size(44, 17);
         importStatusStrip.Text = "闲置中";
         // 
+        // refreshFolderContentButton
+        // 
+        refreshFolderContentButton.Location = new Point(12, 98);
+        refreshFolderContentButton.Name = "refreshFolderContentButton";
+        refreshFolderContentButton.Size = new Size(57, 25);
+        refreshFolderContentButton.TabIndex = 31;
+        refreshFolderContentButton.Text = "刷新";
+        refreshFolderContentButton.UseVisualStyleBackColor = true;
+        refreshFolderContentButton.Click += refreshFolderContentButton_Click;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 17F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(679, 478);
+        ClientSize = new Size(716, 478);
+        Controls.Add(refreshFolderContentButton);
         Controls.Add(statusStrip1);
         Controls.Add(clearButton);
         Controls.Add(label11);
@@ -423,7 +439,7 @@ partial class Form1
         Controls.Add(menuStrip1);
         Icon = (Icon)resources.GetObject("$this.Icon");
         MainMenuStrip = menuStrip1;
-        MinimumSize = new Size(695, 453);
+        MinimumSize = new Size(732, 517);
         Name = "Form1";
         Text = "模板导入工具";
         Load += Form1_Load;
@@ -472,4 +488,6 @@ partial class Form1
     private ToolStripMenuItem infoStrip;
     private ToolStripMenuItem templatePathInfo;
     private ToolStripMenuItem helpMenuStrip;
+    private Button refreshFolderContentButton;
+    private System.Windows.Forms.Timer timer1;
 }

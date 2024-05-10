@@ -23,6 +23,7 @@ public partial class Form1 : Form
     /// <param name="e"></param>
     private void Form1_Load(object sender, EventArgs e)
     {
+        refreshFolderContentButton.Enabled = false;
         InputButton.Enabled = false;
         InputAllButton.Enabled = false;
         clearButton.Enabled = false;
@@ -99,13 +100,13 @@ public partial class Form1 : Form
     /// <param name="e"></param>
     private void templateBox_DragEnter(object sender, DragEventArgs e)
     {
+        string path;
         if (!e.Data!.GetDataPresent(DataFormats.FileDrop))
         {
             e.Effect = DragDropEffects.None;
             return;
         }
         e.Effect = DragDropEffects.Link;
-        string path;
         try
         {
             path = ((Array)e.Data!.GetData(DataFormats.FileDrop)!).GetValue(0)!.ToString()!;
@@ -163,6 +164,7 @@ public partial class Form1 : Form
         templatesFolderPath = path;
         folderLabel.Text = $"已选择 \"{Path.GetFileName(path)}\"。";
         clearButton.Enabled = true;
+        refreshFolderContentButton.Enabled = true;
         RefreshInputButtonState();
     }
     private static string GetNumbers(string input)
@@ -173,7 +175,7 @@ public partial class Form1 : Form
 
         // 将匹配到的数字连接成一个字符串
         string result = "";
-        foreach (Match match in matches)
+        foreach (Match match in matches.Cast<Match>())
         {
             result += match.Value;
         }
@@ -217,11 +219,12 @@ public partial class Form1 : Form
     {
         InputAllButton.Enabled = false;
         InputButton.Enabled = false;
-        //if (templateAuthorTextBox.Text == "") return;
+        //if (templateAuthorTextBox.Text.Contains('_')) return;
         if (templateNameTextBox.Text == "") return;
         if (templateCostTextBox.Text == "") return;
         if (templateUsageComboBox.SelectedIndex < 0) return;
         if (templateSellerId.Text == "") return;
+        //if (templateSellerName.Text.Contains('_')) return;
         if (templateGroupCountTextBox.Text == "") return;
         if (templateDeliveryWaysComboBox.SelectedIndex < 0) return;
         if (templateBox.Items.Count <= 0) return;
@@ -387,7 +390,7 @@ public partial class Form1 : Form
                     MessageBox.Show($"重命名失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     path = directory;
                 }
-        }
+            }
             else
             {
                 path = directory;
@@ -427,7 +430,7 @@ public partial class Form1 : Form
         }
         int templateCount = templates.Length;
         // 模板名
-        string templateAuthor = templateAuthorTextBox.Text.Replace(" ", "");
+        string templateAuthor = templateAuthorTextBox.Text.Trim().Replace(" ", "-");
         if (templateAuthor != "")
         {
             templateAuthor += "牌";
@@ -436,15 +439,16 @@ public partial class Form1 : Form
         {
             templateAuthor = "不知道什么牌";
         }
-        string templateName = templateAuthor + " " + templateNameTextBox.Text.Replace(" ", "");
-        // 模板文件夹名称
-        string templateFolderName = $"{templateGroupCountTextBox.Text}q_{double.Parse(templateCostTextBox.Text):G}r_{usage}_{deliWays}_{templateName}_收入0_数{templateCount}";
+        string templateName = templateNameTextBox.Text.Trim().Replace(" ", "-");
+        string templateFullName = templateAuthor + " " + templateName;
+        // 创建模板文件夹名称
+        string templateFolderName = $"{templateGroupCountTextBox.Text}q_{double.Parse(templateCostTextBox.Text):G}r_{usage}_{deliWays}_{templateFullName}_收入0_数{templateName.Split('+').Length}";
 
         string[] templateDirectories = Directory.GetDirectories(path);
         foreach (string directory in templateDirectories)
         {
             if (Path.GetFileName(directory)[0] == '!') continue;
-            if (Path.GetFileName(directory).Split("_")[4] == templateName)
+            if (Path.GetFileName(directory).Split("_")[4] == templateFullName)
             {
                 // 检测是否存在路径
                 DialogResult result = MessageBox.Show($"已存在模板名为\"{templateAuthor + " " + templateNameTextBox.Text}\"的模板文件夹, 是否仍然添加？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -553,6 +557,7 @@ public partial class Form1 : Form
     }
     private void Clear()
     {
+        refreshFolderContentButton.Enabled = false;
         templatesFilePaths.Clear();
         templateBox.Items.Clear();
         InputButton.Enabled = false;
@@ -611,6 +616,17 @@ public partial class Form1 : Form
         RefreshInputButtonState();
     }
 
+    /// <summary>
+    /// 刷新
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void refreshFolderContentButton_Click(object sender, EventArgs e)
+    {
+        templateBox.Items.Clear();
+        LoadFileInPath(templatesFolderPath);
+    }
+
     private void templatePathInfo_Click(object sender, EventArgs e)
     {
         MessageBox.Show($"模板文件夹路径为{templatePath}。", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -618,6 +634,8 @@ public partial class Form1 : Form
 
     private void helpMenuStrip_Click(object sender, EventArgs e)
     {
-        MessageBox.Show($"    拖拽或选择存放模板工程文件的文件夹到左侧的工具栏，之后在右侧填写模板信息。在列表栏选择需要的工程文件（可多选）后按下\"导入所选\"进行导入，或是使用\"全部导入\"导入列表中的所有工程文件。\n\n    第一次打开该程序时会要求选择模板存放的文件夹，之后可在\"设置\"栏里进行更改，或在\"信息\"栏里查看。", "帮助", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    }
+        MessageBox.Show($"    拖拽或选择存放模板工程文件的文件夹到左侧的工具栏，之后在右侧填写模板信息。在列表栏选择需要的工程文件（可多选）后按下\"导入所选\"进行导入，或是使用\"全部导入\"导入列表中的所有工程文件。\n\n" +
+                         "    第一次打开该程序时会要求选择模板存放的文件夹，之后可在\"设置\"栏里进行更改，或在\"信息\"栏里查看。\n\n" +
+                         "    注意: 模板名以'+'分割多个模板名，多个模板名会被记录在模板数量里", "帮助", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    } 
 }
