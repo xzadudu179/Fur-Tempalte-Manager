@@ -460,7 +460,10 @@ public partial class Form1 : Form
                     templateAuthor += 'ÅÆ';
                 }               
             }
-            
+            else
+            {
+                templateAuthor += 'ÅÆ';
+            }
         }
         else
         {
