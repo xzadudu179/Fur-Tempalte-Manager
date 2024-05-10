@@ -325,9 +325,9 @@ partial class Form1
         // 
         // clearButton
         // 
-        clearButton.Location = new Point(75, 98);
+        clearButton.Location = new Point(78, 98);
         clearButton.Name = "clearButton";
-        clearButton.Size = new Size(67, 25);
+        clearButton.Size = new Size(64, 25);
         clearButton.TabIndex = 28;
         clearButton.Text = "清空";
         clearButton.UseVisualStyleBackColor = true;
@@ -396,7 +396,7 @@ partial class Form1
         // 
         refreshFolderContentButton.Location = new Point(12, 98);
         refreshFolderContentButton.Name = "refreshFolderContentButton";
-        refreshFolderContentButton.Size = new Size(57, 25);
+        refreshFolderContentButton.Size = new Size(64, 25);
         refreshFolderContentButton.TabIndex = 31;
         refreshFolderContentButton.Text = "刷新";
         refreshFolderContentButton.UseVisualStyleBackColor = true;
