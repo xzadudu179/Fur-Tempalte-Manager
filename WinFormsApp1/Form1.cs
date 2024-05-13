@@ -242,7 +242,7 @@ public partial class Form1 : Form
         if (templateCostTextBox.Text == "") return;
         if (templateUsageComboBox.SelectedIndex < 0) return;
         if (templateSellerIdComboBox.Text == "") return;
-        if (!int.TryParse(templateSellerIdComboBox.Text, out _)) return;
+        if (!double.TryParse(templateSellerIdComboBox.Text, out _)) return;
         //if (templateSellerName.Text.Contains('_')) return;
         if (templateGroupCountTextBox.Text == "") return;
         if (templateDeliveryWaysComboBox.SelectedIndex < 0) return;
@@ -376,7 +376,7 @@ public partial class Form1 : Form
         if (templates.Length <= 0) return false;
         int cratedFileCount = 0;
         //MessageBox.Show(templatePath);
-        string path = $"{templatePath}\\{templateSellerIdComboBox.Text}-{(templateSellerName.Text != "" ? templateSellerName.Text : "")}";
+        string path = $"{templatePath}\\{templateSellerIdComboBox.Text}-{(templateSellerName.Text != "" ? "±¸×¢" + templateSellerName.Text : "")}";
         string[] directories = Directory.GetDirectories(templatePath);
         foreach (string directory in directories)
         {
