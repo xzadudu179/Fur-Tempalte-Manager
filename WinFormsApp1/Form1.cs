@@ -47,7 +47,7 @@ public partial class Form1 : Form
                 SellerIdName.Add(Path.GetFileName(file).Split("-")[0], Path.GetFileName(file).Split("-")[1][2..]);
             }
             catch { }
-            string name = Path.GetFileName(file).Split("-")[1];
+            string name = Path.GetFileName(file).Split("-")[1][2..];
             templateSellerIdComboBox.Items.Add(Path.GetFileName(file).Split("-")[0] + (name != "" ? $" ({name})" : ""));
         }
     }
@@ -242,6 +242,7 @@ public partial class Form1 : Form
         if (templateCostTextBox.Text == "") return;
         if (templateUsageComboBox.SelectedIndex < 0) return;
         if (templateSellerIdComboBox.Text == "") return;
+        if (!int.TryParse(templateSellerIdComboBox.Text, out _)) return;
         //if (templateSellerName.Text.Contains('_')) return;
         if (templateGroupCountTextBox.Text == "") return;
         if (templateDeliveryWaysComboBox.SelectedIndex < 0) return;
@@ -375,7 +376,7 @@ public partial class Form1 : Form
         if (templates.Length <= 0) return false;
         int cratedFileCount = 0;
         //MessageBox.Show(templatePath);
-        string path = $"{templatePath}\\{templateSellerIdComboBox.Text}-{(templateSellerName.Text != "" ? "±¸×¢" + templateSellerName.Text : "")}";
+        string path = $"{templatePath}\\{templateSellerIdComboBox.Text}-{(templateSellerName.Text != "" ? templateSellerName.Text : "")}";
         string[] directories = Directory.GetDirectories(templatePath);
         foreach (string directory in directories)
         {
@@ -674,5 +675,7 @@ public partial class Form1 : Form
         string boxTextString = templateSellerIdComboBox.Text.Split('(')[0];
         templateSellerIdComboBox.Text = boxTextString[..(boxTextString.Length - 1)];
         templateSellerName.Text = SellerIdName[templateSellerIdComboBox.Text];
+        templateSellerIdComboBox.Text = ParseToNumberFormat(templateSellerIdComboBox.Text);
+        RefreshInputButtonState();
     }
 }
