@@ -360,11 +360,11 @@ public partial class Form1 : Form
         }
         importStatusStrip.Text = "闲置中";
         this.Cursor = Cursors.Default;
-        foreach (int index in templateBox.SelectedIndices)
-        {
-            templatesFilePaths.RemoveAt(index);
-            templateBox.Items.RemoveAt(index);
-        }
+        //foreach (int index in templateBox.SelectedIndices)
+        //{
+        //    templatesFilePaths.RemoveAt(index);
+        //    templateBox.Items.RemoveAt(index);
+        //}
         RefreshInputButtonState();
     }
 
@@ -433,7 +433,7 @@ public partial class Form1 : Form
             "商用" => "商",
             "使用" => "使",
             "商使合一" => "商+使",
-            _ => "ERROR"
+            _ => templateUsageComboBox.Text,
         };
         string deliWays = templateDeliveryWaysComboBox.Text switch
         {
@@ -447,7 +447,7 @@ public partial class Form1 : Form
             MessageBox.Show("用途或发货方式选择错误", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
-        int templateCount = templates.Length;
+        //int templateCount = templates.Length;
         // 模板名
         string templateAuthor = templateAuthorTextBox.Text.Trim().Replace(" ", "-");
         if (templateAuthor != "")
@@ -473,7 +473,7 @@ public partial class Form1 : Form
         string templateName = templateNameTextBox.Text.Trim().Replace(" ", "-");
         string templateFullName = templateAuthor + " " + templateName;
         // 创建模板文件夹名称
-        string templateFolderName = $"{templateGroupCountTextBox.Text}q_{double.Parse(templateCostTextBox.Text):G}r_{usage}_{deliWays}_{templateFullName}_收入0_数{templateName.Split('+').Length}";
+        string templateFolderName = $"{templateGroupCountTextBox.Text}q_{double.Parse(templateCostTextBox.Text):G}r_{usage}_{deliWays}_{templateFullName}_数{templateName.Split('+').Length}";
 
         string[] templateDirectories = Directory.GetDirectories(path);
         foreach (string directory in templateDirectories)
