@@ -44,11 +44,14 @@ public partial class Form1 : Form
         {
             try
             {
-                SellerIdName.Add(Path.GetFileName(file).Split("-")[0], Path.GetFileName(file).Split("-")[1][2..]);
+                SellerIdName.Add(Path.GetFileName(file).Split("-")[0], string.Join("-", Path.GetFileName(file).Split("-")[1..])[2..]);
             }
             catch { }
-            string name = Path.GetFileName(file).Split("-")[1][2..];
-            templateSellerIdComboBox.Items.Add(Path.GetFileName(file).Split("-")[0] + (name != "" ? $" ({name})" : ""));
+            string name = string.Join("-", Path.GetFileName(file).Split("-")[1..])[2..];
+            string id = Path.GetFileName(file).Split("-")[0];
+            //templateSellerIdComboBox.Items.Add(Path.GetFileName(file).Split("-")[0] + (name != "" ? $" ({name})" : ""));
+            // 只显示id
+            templateSellerIdComboBox.Items.Add((name != "" ? $" {name}" : id));
         }
     }
 
@@ -67,7 +70,16 @@ public partial class Form1 : Form
                     {
                         continue;
                     }
-                    hasTemplatePath = true;
+                    try
+                    {
+                        // 检测文件夹是否有效
+                        Directory.GetDirectories(line.Split("=")[1]);
+                        hasTemplatePath = true;
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
                 newLines.Add(line);
             }
@@ -399,8 +411,8 @@ public partial class Form1 : Form
             {
                 try
                 {
-                    MessageBox.Show(path);
-                    MessageBox.Show(directory);
+                    //MessageBox.Show(path);
+                    //MessageBox.Show(directory);
                     Directory.Move(directory, path);
                     MessageBox.Show($"成功将文件夹重命名为{Path.GetFileName(path)}。", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
