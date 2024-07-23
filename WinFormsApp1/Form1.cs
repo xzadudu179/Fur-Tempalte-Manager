@@ -49,9 +49,9 @@ public partial class Form1 : Form
             catch { }
             string name = string.Join("-", Path.GetFileName(file).Split("-")[1..])[2..];
             string id = Path.GetFileName(file).Split("-")[0];
-            //templateSellerIdComboBox.Items.Add(Path.GetFileName(file).Split("-")[0] + (name != "" ? $" ({name})" : ""));
+            templateSellerIdComboBox.Items.Add(Path.GetFileName(file).Split("-")[0] + (name != "" ? $" ({name})" : ""));
             // 只显示id
-            templateSellerIdComboBox.Items.Add((name != "" ? $" {name}" : id));
+            //templateSellerIdComboBox.Items.Add((name != "" ? name : id));
         }
     }
 
@@ -393,20 +393,21 @@ public partial class Form1 : Form
         foreach (string directory in directories)
         {
             // 判断该QQ的文件夹是否存在
+            string sellerName = string.Join("-", Path.GetFileName(directory).Split("-")[1..])[2..];
             if (Path.GetFileName(directory).Split("-")[0] != templateSellerIdComboBox.Text) continue;
             path = directory;
             //MessageBox.Show($"存在QQ为{templateSellerIdComboBox.Text}的文件夹{Path.GetFileName(directory).Split("-")[0]}");
             try
             {
                 // 如果备注名一致或没填写备注名则继续
-                if (Path.GetFileName(directory).Split("-")[1][2..] == templateSellerName.Text || templateSellerName.Text == "") continue;
+                if (sellerName == templateSellerName.Text || templateSellerName.Text == "") continue;
             }
             catch
             {
                 // 本身就没有备注名
                 continue;
             }
-            DialogResult sellerNameResult = MessageBox.Show($"当前对于QQ\"{templateSellerIdComboBox.Text}\"的备注名不一致, 原备注名为\"{Path.GetFileName(directory).Split("-")[1][2..]}\", 当前填写备注名为\"{templateSellerName.Text}\", 是否重命名为\"{path}\"？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult sellerNameResult = MessageBox.Show($"当前对于QQ\"{templateSellerIdComboBox.Text}\"的备注名不一致, 原备注名为\"{sellerName}\", 当前填写备注名为\"{templateSellerName.Text}\", 是否重命名为\"{path}\"？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (sellerNameResult == DialogResult.Yes)
             {
                 try
